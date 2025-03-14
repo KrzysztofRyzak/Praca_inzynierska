@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <%- include("../partials/head", { title: "Dodaj nowe zadanie" }) %>
+</head>
+<script>
+    function answerTypeControlOnChange() {
+        let answerHtml = null;
+        let answerTypeControlValue = document.getElementById("answerTypeControl").value;
+        console.log(answerTypeControlValue);
+        if (answerTypeControlValue === "Pole tekstowe") {
+            // Normalna odpowiedź tekstowa
+            answerHtml = `                <div class="mb-3">
+                    <label for="correctAnswerControl" class="form-label fw-bold">Poprawna odpowiedź:</label>
+                    <input type="text" id="correctAnswerControl" class="form-control" name="correct_answer" required>
+                        <div class="invalid-feedback">Podaj poprawną odpowiedź.</div>
+                </div>`
+        } else {
+            //quizowe odpowiedzi
+            answerHtml =
+                `                        <div>
+                        <div class="mb-3">
+                            <label for="option1" class="form-label fw-bold">Opcja 1:</label>
+                            <input type="text" id="option1" class="form-control" name="option1" required>
+                            <div class="invalid-feedback">Podaj poprawną opcje 1.</div>
+                            <label for="option2" class="form-label fw-bold">Opcja 2:</label>
+                            <input type="text" id="option2" class="form-control" name="option2" required>
+                            <div class="invalid-feedback">Podaj poprawną opcje 2.</div>
+                            <label for="option3" class="form-label fw-bold">Opcja 3:</label>
+                            <input type="text" id="option3" class="form-control" name="option3" required>
+                            <div class="invalid-feedback">Podaj poprawną opcje 3.</div>
+                            <label for="option4" class="form-label fw-bold">Opcja 4:</label>
+                            <input type="text" id="option4" class="form-control" name="option4" required>
+                            <div class="invalid-feedback">Podaj poprawną opcje 4.</div>
+                        </div>
+                        <div class="mb-3">
+                             <label for="correctOptionAnswer" class="form-label fw-bold">Poprawna odpowiedź:</label>
+                        <select id="correctOptionAnswer" class="form-select" name="correctOption" required>
+                                <option value="option1">Opcja 1</option>
+                                <option value="option2">Opcja 2</option>
+                                <option value="option3">Opcja 3</option>
+                                <option value="option4">Opcja 4</option>
+                        </select>
+                </div>
+                </div>`
+        }
+        document.getElementById("correctAnswer").innerHTML = answerHtml;
+    }
+</script>
+<body>
+    <%- include("../partials/navbar", { user }) %>
+
+    <div class="container mt-5">
+        <h2 class="text-center fw-bold">Dodaj nowe zadanie</h2>
+        <p class="text-muted text-center">Wypełnij poniższy formularz, aby dodać nowe zadanie do lekcji.</p>
+
+        <div class="card mx-auto mt-4 shadow-sm" style="max-width: 700px;">
+            <div class="card-body">
+                <form id="mainForm" action="/exercises/add" method="post" class="needs-validation" novalidate >
+
+                    <!-- Wybór lekcji -->
+                    <div class="mb-3">
+                        <label for="lessonControl" class="form-label fw-bold">Wybierz lekcję:</label>
+                        <select id="lessonControl" class="form-select" name="lesson_id" required>
+                            <% lessons.forEach(lesson => { %>
+                                <option value="<%= lesson.id %>"><%= lesson.title %></option>
+                            <% }); %>
+                        </select>
+                        <div class="invalid-feedback">Wybierz lekcję dla tego zadania.</div>
+                    </div>
+
+                    <!-- Pytanie zadania -->
+                    <div class="mb-3">
+                        <label for="questionControl" class="form-label fw-bold">Treść pytania:</label>
+                        <textarea id="questionControl" class="form-control" name="question" rows="3" required></textarea>
+                        <div class="invalid-feedback">Podaj treść pytania.</div>
+                    </div>
+
+                    <!-- Przykładowy kod -->
+                    <div class="mb-3">
+                        <label for="codeExampleControl" class="form-label fw-bold">Przykładowy kod (opcjonalnie):</label>
+                        <textarea id="codeExampleControl" class="form-control" name="code_example" rows="3"></textarea>
+                    </div>
+
+                    <!-- Typ odpowiedzi -->
+                    <div class="mb-3">
+                        <label for="answerTypeControl" class="form-label fw-bold">Typ odpowiedzi:</label>
+                        <select id="answerTypeControl" class="form-select" name="answer_type" onchange="answerTypeControlOnChange()" required >
+                            <% exercise_answer_types.forEach(type => { %>
+                                <option value="<%= type %>"><%= type %></option>
+                            <% }); %>
+                        </select>
+                        <div class="invalid-feedback">Wybierz typ odpowiedzi.</div>
+                    </div>
+
+                    <!-- Odpowiedzi -->
+                    <div id="correctAnswer">
+                        <div class="mb-3">
+                            <label for="correctAnswerControl" class="form-label fw-bold">Poprawna odpowiedź:</label>
+                            <input type="text" id="correctAnswerControl" class="form-control" name="correct_answer" required>
+                            <div class="invalid-feedback">Podaj poprawną odpowiedź.</div>
+                        </div>
+                    </div>
+
+                    <!-- Przycisk dodawania -->
+                    <button type="submit" class="btn btn-primary w-100 fw-bold">Dodaj zadanie</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Powrót -->
+        <div class="text-center mt-3">
+            <a href="/exercises" class="btn btn-secondary">Wróć do zadań</a>
+        </div>
+    </div>
+
+    <%- include("../partials/footer") %>
+
+<!--     Walidacja formularza -->
+    <script>
+        (function () {
+            'use strict';
+            var forms = document.querySelectorAll('.needs-validation');
+            Array.prototype.slice.call(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+    </script>
+</body>
+</html>

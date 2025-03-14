@@ -1,0 +1,245 @@
+/* General styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #f4f4f9;
+    color: #333;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Navbar */
+.navbar {
+    background: #007bff;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px;
+}
+
+.navbar a:hover {
+    background: #0056b3;
+    border-radius: 3px;
+}
+
+/* Styl dla przycisku rozwijania nawigacji */
+.navbar-toggler {
+    border: none;
+    outline: none;
+}
+
+.navbar-toggler-icon {
+    background-color: #fff;
+    border-radius: 3px;
+}
+
+/* Responsywny układ dla Navbara */
+@media (max-width: 768px) {
+    .navbar-collapse {
+        text-align: center;
+    }
+    
+    .navbar-nav {
+        width: 100%;
+    }
+    
+    .navbar-nav .nav-item {
+        margin-bottom: 10px;
+    }
+
+    /* Informacje o użytkowniku nad opcjami menu */
+    .user-info {
+        font-weight: bold;
+        color: #fff;
+        background-color: #0056b3;
+        padding: 10px;
+        text-align: center;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+    /* Przycisk wylogowania pod listą opcji */
+    .logout-btn {
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin-top: 10px;
+    }
+}
+
+/* Hero section */
+.hero-text {
+    max-width: 750px;
+    margin: auto;
+    text-align: center;
+}
+
+/* Kontener główny */
+.container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* Karty kursów */
+.course-card {
+    min-height: 200px;
+}
+
+/* Buttons */
+button.btn, a.btn {
+    display: inline-block;
+    padding: .5rem 1rem;
+    margin: .5rem 0;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button.btn:hover, a.btn:hover {
+    background-color: #0056b3;
+}
+
+/* Forms */
+form {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.form-label {
+    font-weight: bold;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    padding: .5rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    color: #333;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Tables - poprawki dla wersji mobilnych */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+table.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Zapobiega zawijaniu się tekstu w tabeli na małych ekranach */
+table.table th, table.table td {
+    white-space: nowrap;
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+table.table th {
+    background: #007bff;
+    color: #fff;
+    font-weight: bold;
+}
+
+table.table tr:nth-child(even) {
+    background: #f2f2f2;
+}
+
+@media (max-width: 768px) {
+    table.table th, table.table td {
+        font-size: 14px;
+        padding: 8px;
+    }
+}
+
+/* Stopka */
+footer {
+    margin-top: auto;
+    padding-bottom: 20px;
+    background-color: #343a40;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+}
+
+/* Stopka zawsze na dole */
+html, body {
+    height: 100%;
+}
+
+main {
+    flex: 1;
+}
+
+/* Media Queries - poprawki dla mniejszych ekranów */
+@media (max-width: 992px) {
+    .hero-text h1 {
+        font-size: 2rem;
+    }
+    .hero-text p {
+        font-size: 1rem;
+    }
+    .course-card {
+        text-align: center;
+        padding: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-text h1 {
+        font-size: 1.8rem;
+    }
+    .hero-text p {
+        font-size: 0.9rem;
+    }
+    .btn-lg {
+        width: 100%;
+        margin-top: 10px;
+    }
+    .course-card {
+        min-height: 180px;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-text h1 {
+        font-size: 1.6rem;
+    }
+    .hero-text p {
+        font-size: 0.85rem;
+    }
+    .btn-lg {
+        width: 100%;
+    }
+    .course-card {
+        min-height: 150px;
+    }
+}

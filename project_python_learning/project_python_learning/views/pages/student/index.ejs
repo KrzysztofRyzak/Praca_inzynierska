@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <%- include("../partials/head", { title: "Panel Studenta - Python Learning" }) %>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- NAVBAR -->
+    <%- include("../partials/navbar") %>
+
+    <!-- Sekcja powitalna -->
+    <div class="container text-center py-5">
+        <h1 class="fw-bold">Witaj, <%= user.name %>!</h1>
+        <p class="lead">To jest Twój panel główny. Śledź swój postęp i kontynuuj naukę.</p>
+    </div>
+
+    <!-- Główne opcje studenta -->
+    <div class="container mt-4">
+        <div class="row text-center">
+            <div class="col-md-4">
+                <div class="card shadow-sm p-4">
+                    <h5 class="fw-bold">Twoje Lekcje</h5>
+                    <p>Przeglądaj dostępne lekcje i rozwijaj swoje umiejętności.</p>
+                    <a href="/lessons" class="btn btn-primary">Zobacz lekcje</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow-sm p-4">
+                    <h5 class="fw-bold">Twoje Zadania</h5>
+                    <p>Rozwiązuj ćwiczenia i sprawdzaj swoje odpowiedzi ocenione przez nauczycieli.</p>
+                    <a href="/student/my_submissions" class="btn btn-success">Zobacz ćwiczenia</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow-sm p-4">
+                    <h5 class="fw-bold">Twój Postęp</h5>
+                    <p>Sprawdź, ile już się nauczyłeś i jakie materiały jeszcze przed Tobą.</p>
+                    <a href="/student/progress" class="btn btn-info">Zobacz postęp</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <%- include("../partials/footer") %>
+
+</body>
+</html>

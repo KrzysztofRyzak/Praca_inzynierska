@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <%- include("../partials/head", { title: "Zadanie" }) %>
+</head>
+<body>
+    <%- include("../partials/navbar", { user }) %>
+
+    <div class="container mt-5">
+        <h1 class="text-center">Zadanie</h1>
+
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title"><%= exercise.question %></h5>
+
+                <% if (exercise.code_example) { %>
+                    <pre class="bg-light p-3"><code><%= exercise.code_example %></code></pre>
+                <% } %>
+                <p>
+                    <strong>Typ odpowiedzi:</strong>
+                    <%= exercise.answer_type %>
+                </p>
+                <!--Opcje quizu-->
+                <% if (exercise.answer_type === "Wielokrotny wybór") { %>
+                    <div class="form-check">
+                        <% JSON.parse(JSON.parse(exercise.options)).forEach(option => { %>
+                            <p>
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDisabled" disabled>
+                                <label class="form-check-label" for="flexCheckDisabled">
+                                <%= option %>
+                                </label>
+                            </p>
+                    <% }); %>
+                    </div>
+                <% } %>
+
+                <!-- Widoczne tylko dla studentów -->
+                <% if (user && user.role === "student") { %>
+                    <a href="/exercises/<%= exercise.id %>/submit" class="btn btn-primary">Rozwiąż zadanie</a>
+                <% } else { %>
+                    <div>
+                        <a href="/exercises/edit/<%= exercise.id %>" class="btn btn-sm btn-warning"> Edytuj</a>
+                        <a href="/exercises/delete/<%= exercise.id %>" class="btn btn-sm btn-danger"> Usuń</a>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+
+        <a href="/exercises" class="btn btn-secondary mt-3">Powrót do listy zadań</a>
+    </div>
+
+    <%- include("../partials/footer") %>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <%- include("../partials/head", { title: "Zarządzanie lekcjami" }) %>
+</head>
+<body>
+    <%- include("../partials/navbar", { user }) %>
+
+    <div class="container mt-5">
+        <h2 class="text-center fw-bold">Zarządzanie lekcjami</h2>
+
+        <!-- Przycisk dodawania lekcji -->
+        <div class="d-flex justify-content-end">
+            <a href="/lessons/add" class="btn btn-primary mb-3"> Dodaj nową lekcję</a>
+        </div>
+
+        <!-- Tabela lekcji -->
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered mt-4">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Tytuł</th>
+                        <th>Poziom</th>
+                        <th>Autor</th>
+                        <th class="text-center">Akcje</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% lessons.forEach(lesson => { %>
+                        <tr>
+                            <td><%= lesson.id %></td>
+                            <td><%= lesson.title %></td>
+                            <td><%= lesson.difficulty %></td>
+                            <td><%= lesson.created_by %></td>
+                            <td class="text-center">
+                                <a href="/lessons/edit/<%= lesson.id %>" class="btn btn-sm btn-warning text-white"> Edytuj</a>
+                                <form action="/lessons/delete/<%= lesson.id %>" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-danger border-0"> Usuń</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <%- include("../partials/footer") %>
+</body>
+</html>

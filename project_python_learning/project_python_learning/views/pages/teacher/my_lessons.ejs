@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <%- include("../partials/head", { title: "Moje Lekcje - Panel Nauczyciela" }) %>
+</head>
+<body>
+    <%- include("../partials/navbar", { user }) %>
+
+    <div class="container mt-5">
+        <h1 class="text-center">Moje Lekcje</h1>
+        <p class="text-center">Zarządzaj swoimi lekcjami - dodawaj, edytuj i usuwaj materiały dla uczniów.</p>
+
+        <div class="text-end">
+            <a href="/teacher/lessons/add" class="btn btn-primary">Dodaj nową lekcję</a>
+        </div>
+
+        <% if (lessons.length > 0) { %>
+            <table class="table mt-4">
+                <thead>
+                    <tr>
+                        <th>Tytuł</th>
+                        <th>Poziom trudności</th>
+                        <th>Opcje</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% lessons.forEach(lesson => { %>
+                        <tr>
+                            <td><a href="/lessons/<%= lesson.id %>"><%= lesson.title %></a></td>
+                            <td><%= lesson.difficulty %></td>
+                            <td>
+                                <a href="/teacher/lessons/edit/<%= lesson.id %>" class="btn btn-warning btn-sm">Edytuj</a>
+                                <form action="/teacher/lessons/delete/<%= lesson.id %>" method="POST" class="d-inline">
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Czy na pewno chcesz usunąć tę lekcję?')">Usuń</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p class="text-center text-muted">Nie masz jeszcze żadnych lekcji.</p>
+        <% } %>
+    </div>
+
+    <%- include("../partials/footer") %>
+</body>
+</html>

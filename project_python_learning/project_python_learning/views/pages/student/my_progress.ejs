@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <%- include("../partials/head", { title: "Mój postęp - Python Learning" }) %>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+    <%- include("../partials/navbar") %>
+
+    <div class="container mt-5">
+        <h1 class="text-center fw-bold">Mój postęp</h1>
+        <p class="text-center text-muted">Śledź swoje postępy w nauce i zdobyte punkty.</p>
+
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <div class="card shadow-sm p-4 text-center">
+                    <h5 class="fw-bold">Ukończone lekcje</h5>
+                    <h2 class="text-primary"><%= completedLessonsCount %></h2>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow-sm p-4 text-center">
+                    <h5 class="fw-bold">Rozwiązane zadania</h5>
+                    <h2 class="text-success"><%= completedExercisesCount %></h2>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow-sm p-4 text-center">
+                    <h5 class="fw-bold">Zdobyte punkty</h5>
+                    <h2 class="text-warning"><%= totalPoints %> / <%= maxPoints %></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include("../partials/footer") %>
+
+</body>
+</html>

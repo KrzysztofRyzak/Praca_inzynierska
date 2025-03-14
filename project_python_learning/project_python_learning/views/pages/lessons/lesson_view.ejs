@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <%- include("../partials/head", { title: lesson.title }) %>
+</head>
+<body>
+    <%- include("../partials/navbar", { user }) %>
+
+    <div class="container mt-5">
+        <h1 class="text-center"><%= lesson.title %></h1>
+        <p class="text-muted text-center">Poziom trudności: <%= lesson.difficulty %></p>
+        <hr>
+
+        <div class="lesson-content">
+            <div><%- lesson.content %></div>
+        </div>
+
+        <hr>
+        <h3>Zadania do tej lekcji:</h3>
+
+        <% if (exercises.length > 0) { %>
+            <ul class="list-group">
+                <% exercises.forEach(exercise => { %>
+                    <li class="list-group-item">
+                        <strong><%= exercise.question %></strong>
+
+                        <% if (exercise.answer_type === "Wielokrotny wybór") { %>
+                            <!-- Formularz dla quizów -->
+                            <form action="/exercises/<%= exercise.id %>/submit" method="post" class="quiz-form">
+                                <% JSON.parse(JSON.parse(exercise.options)).forEach(option => { %>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="submitted_answer" value="<%= option %>" required>
+                                        <label class="form-check-label"><%= option %></label>
+                                    </div>
+                                <% }); %>
+                                <button type="submit" class="btn btn-success mt-2">Sprawdź odpowiedź</button>
+                            </form>
+
+                        <% } else { %>
+                            <!-- Link do zadań wpisywanych -->
+                            <a href="/exercises/<%= exercise.id %>" class="btn btn-primary">Rozwiąż zadanie</a>
+                        <% } %>
+
+                        <!-- Komunikat o punktach dla quizów -->
+                        <% if (exercise.answer_type === "Wielokrotny wybór" && exercise.lastSubmission) { %>
+                            <div class="mt-2">
+                                <% if (exercise.lastSubmission.points === 10) { %>
+                                    <span class="badge bg-success">Poprawna odpowiedź! (+10 pkt)</span>
+                                <% } else { %>
+                                    <span class="badge bg-danger">Błędna odpowiedź! (+0 pkt)</span>
+                                <% } %>
+                            </div>
+                        <% } %>
+                    </li>
+                <% }); %>
+            </ul>
+        <% } else { %>
+            <p class="text-muted">Brak dostępnych ćwiczeń do tej lekcji.</p>
+        <% } %>
+    </div>
+
+    <%- include("../partials/footer") %>
+</body>
+</html>

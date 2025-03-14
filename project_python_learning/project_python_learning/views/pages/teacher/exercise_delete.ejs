@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <%- include("../partials/head", { title: "Usuń zadanie" }) %>
+</head>
+<body>
+    <%- include("../partials/navbar", { user }) %>
+
+    <div class="container mt-5">
+        <h2 class="text-center text-danger fw-bold">Usuń zadanie</h2>
+        <p class="text-muted text-center">Czy na pewno chcesz usunąć to zadanie? Tej operacji nie można cofnąć.</p>
+
+        <div class="card mx-auto mt-4 shadow-sm border-danger" style="max-width: 600px;">
+            <div class="card-body text-center">
+                <h4 class="text-danger fw-bold"><%= exercise.question %></h4>
+
+                <% if (exercise.code_example) { %>
+                    <pre class="bg-light p-3"><code><%= exercise.code_example %></code></pre>
+                <% } %>
+
+                <p><strong>Typ odpowiedzi:</strong> 
+                    <span class="badge bg-primary">
+                        <%= exercise.answer_type === "multiple_choice" ? "Wielokrotny wybór" : "Pole tekstowe" %>
+                    </span>
+                </p>
+
+                <p><strong>Poprawna odpowiedź:</strong> <span class="badge bg-success"><%= exercise.correct_answer %></span></p>
+
+                <!-- Formularz usuwania zadania -->
+                <form action="/exercises/delete/<%= exercise.id %>" method="post" class="mt-3">
+                    <button type="submit" class="btn btn-danger w-100 fw-bold">Tak, usuń zadanie</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Przycisk cofania -->
+        <div class="text-center mt-4">
+            <a href="/exercises" class="btn btn-secondary fw-bold">Anuluj</a>
+        </div>
+    </div>
+
+    <%- include("../partials/footer") %>
+</body>
+</html>

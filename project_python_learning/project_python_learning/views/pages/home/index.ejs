@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <%- include('../partials/head', { title: "Strona Główna - Python Learning" }) %>
+</head>
+<body class="d-flex flex-column min-vh-100">
+    
+    <!-- NAVBAR -->
+    <%- include('../partials/navbar') %>
+
+    <!-- Sekcja Hero -->
+    <header class="bg-primary text-white text-center py-5">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Witaj w Python Learning!</h1>
+            <p class="lead">Interaktywna platforma do nauki programowania w Pythonie.</p>
+            <p>Rozpocznij swoją przygodę z programowaniem od podstaw lub rozwijaj swoje umiejętności.</p>
+            <% if (!user) { %>
+                <a href="/register" class="btn btn-light btn-lg mx-2">Zarejestruj się</a>
+                <a href="/login" class="btn btn-outline-light btn-lg mx-2">Zaloguj się</a>
+            <% } else { %>
+                <a href="/lessons" class="btn btn-light btn-lg mx-2">Przeglądaj Lekcje</a>
+            <% } %>
+        </div>
+    </header>
+
+    <!-- Sekcja "Co zawiera kurs?" -->
+    <section class="container text-center py-5">
+        <h2 class="fw-bold mb-4">Co zawiera kurs?</h2>
+        
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card shadow-sm p-3">
+                    <h5 class="fw-bold">Materiały dydaktyczne</h5>
+                    <p>Pełne kompendium wiedzy o Pythonie w jednym miejscu.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow-sm p-3">
+                    <h5 class="fw-bold">Zadania do lekcji</h5>  
+                    <p>Ćwicz swoje umiejętności, rozwiązując interaktywne zadania.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow-sm p-3">
+                    <h5 class="fw-bold">Profesjonalna kadra</h5>
+                    <p>Indywidualne podejście do każdego ucznia, ucz się od ekspertów z wieloletnim doświadczeniem.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow-sm p-3">
+                    <h5 class="fw-bold">Panel dla nauczycieli</h5>
+                    <p>Możliwość zarządzania lekcjami i monitorowania postępów uczniów.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow-sm p-3">
+                    <h5 class="fw-bold">Responsywność</h5>
+                    <p>Dopasowanie kursu do komputerów, tabletów i telefonów.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow-sm p-3">
+                    <h5 class="fw-bold">Postęp i ocena</h5>
+                    <p>Śledź swoje postępy i zobacz, jak nauczyciele oceniają Twoje odpowiedzi.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <%- include('../partials/footer') %>
+
+</body>
+</html>

@@ -1,0 +1,92 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+        <!-- Logo (lewa strona) -->
+        <a class="navbar-brand fw-bold text-primary" href="/">Python Learning</a>
+
+        <!-- Przycisk mobilny -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Sekcje nawigacji -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+
+            <!-- Sekcja użytkownika (NA SAMEJ GÓRZE ROZWIJANEGO MENU) -->
+            <% if (user && user.email) { %>
+                <div class="d-lg-none text-center py-2 border-bottom">
+                    <span class="fw-bold text-primary"><%= user.name %> (<%= user.email %>)</span>
+                </div>
+            <% } %>
+
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                    <a class="nav-link fw-bold text-dark" href="/"> Strona Główna</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-bold text-dark" href="/lessons"> Lekcje</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-bold text-dark" href="/exercises"> Ćwiczenia</a>
+                </li>
+
+                <!-- Opcje dla STUDENTA -->
+                <% if (user && user.role === "student") { %>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold text-dark" href="/student">Panel Studenta</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold text-dark" href="/student/my_submissions">Moje ćwiczenia</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold text-dark" href="/student/progress">Mój postęp</a>
+                    </li>
+                <% } %>
+
+                <!-- Opcje dla NAUCZYCIELA -->
+                <% if (user && user.role === "teacher") { %>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold text-dark" href="/teacher">Panel Nauczyciela</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold text-dark" href="/teacher/my_submissions">Moje zadania</a>
+                    </li>
+                <% } %>
+
+                <!-- Opcja dla ADMINA -->
+                <% if (user && user.role === "admin") { %>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold text-dark" href="/admin">Panel Admina</a>
+                    </li>
+                <% } %>
+            </ul>
+
+            <!-- Sekcja użytkownika dla większych ekranów -->
+            <% if (user && user.email) { %>
+                <div class="d-lg-flex align-items-center ms-lg-auto d-none d-lg-block">
+                    <span class="fw-bold text-primary me-3">
+                        <%= user.name %> (<%= user.email %>)
+                    </span>
+                    <form action="/logout" method="POST">
+                        <button class="btn btn-outline-danger fw-bold">Wyloguj</button>
+                    </form>
+                </div>
+            <% } else { %>
+                <!-- Opcje logowania i rejestracji dla niezalogowanych -->
+                <div class="d-flex ms-lg-auto">
+                    <a class="btn btn-outline-primary fw-bold me-2" href="/login">Zaloguj się</a>
+                    <a class="btn btn-primary fw-bold" href="/register">Zarejestruj się</a>
+                </div>
+            <% } %>
+
+            <!-- Przycisk Wyloguj na wersji mobilnej (pod opcjami menu) -->
+            <% if (user && user.email) { %>
+                <div class="d-lg-none text-center mt-3">
+                    <form action="/logout" method="POST">
+                        <button class="btn btn-outline-danger fw-bold">Wyloguj</button>
+                    </form>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</nav>

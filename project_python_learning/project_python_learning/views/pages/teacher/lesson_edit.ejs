@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <%- include("../partials/head", { title: "Edytuj lekcję" }) %>
+</head>
+<body>
+    <%- include("../partials/navbar", { user }) %>
+
+    <div class="container mt-5">
+        <h2 class="text-center fw-bold"> Edytuj lekcję</h2>
+        <p class="text-muted text-center">Zmodyfikuj informacje dotyczące lekcji i zapisz zmiany.</p>
+
+        <div class="card mx-auto mt-4 shadow-sm border-primary" style="max-width: 700px;">
+            <div class="card-body">
+                <form action="/lessons/edit/<%= lesson.id %>" method="post" class="needs-validation" novalidate>
+
+                    <!-- Tytuł lekcji -->
+                    <div class="mb-3">
+                        <label for="titleControl" class="form-label fw-bold">Tytuł lekcji:</label>
+                        <input type="text" id="titleControl" class="form-control" name="title" value="<%= lesson.title %>" required>
+                        <div class="invalid-feedback">Podaj tytuł lekcji.</div>
+                    </div>
+
+                    <!-- Wybór kategorii -->
+                    <div class="mb-3">
+                        <label for="categoryControl" class="form-label fw-bold">Kategoria:</label>
+                        <select id="categoryControl" class="form-select" name="category" required>
+                            <% lesson_categories.forEach(category => { %>
+                                <option value="<%= category %>" <%= lesson.category === category ? "selected" : "" %>><%= category %></option>
+                            <% }); %>
+                        </select>
+                        <div class="invalid-feedback">Wybierz kategorię lekcji.</div>
+                    </div>
+
+                    <!-- Opis lekcji -->
+                    <div class="mb-3">
+                        <label for="descriptionControl" class="form-label fw-bold">Krótki opis:</label>
+                        <textarea id="descriptionControl" class="form-control" name="description" rows="2" required><%= lesson.description %></textarea>
+                        <div class="invalid-feedback">Podaj krótki opis lekcji.</div>
+                    </div>
+
+                    <!-- Treść lekcji -->
+                    <div class="mb-3">
+                        <label for="contentControl" class="form-label fw-bold">Treść lekcji:</label>
+                        <textarea id="contentControl" class="form-control" name="content" rows="6" required><%= lesson.content %></textarea>
+                        <div class="invalid-feedback">Podaj treść lekcji.</div>
+                    </div>
+
+                    <!-- Poziom trudności -->
+                    <div class="mb-3">
+                        <label for="difficultyControl" class="form-label fw-bold">Poziom trudności:</label>
+                        <select id="difficultyControl" class="form-select" name="difficulty" required>
+                            <% lesson_difficulties.forEach(difficulty => { %>
+                                <option value="<%= difficulty %>" <%= lesson.difficulty === difficulty ? "selected" : "" %>><%= difficulty %></option>
+                            <% }); %>
+                        </select>
+                        <div class="invalid-feedback">Wybierz poziom trudności.</div>
+                    </div>
+
+                    <!-- Przycisk zapisu -->
+                    <button type="submit" class="btn btn-primary w-100 fw-bold"> Zapisz zmiany</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Powrót -->
+        <div class="text-center mt-3">
+            <a href="/lessons" class="btn btn-secondary fw-bold"> Wróć do lekcji</a>
+        </div>
+    </div>
+
+    <%- include("../partials/footer") %>
+
+    <!-- Walidacja formularza -->
+    <script>
+        (function () {
+            'use strict';
+            var forms = document.querySelectorAll('.needs-validation');
+            Array.prototype.slice.call(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+    </script>
+
+</body>
+</html>

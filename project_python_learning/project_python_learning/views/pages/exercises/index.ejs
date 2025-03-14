@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <%- include("../partials/head", { title: "Zadania" }) %>
+</head>
+<body>
+    <%- include("../partials/navbar", { user }) %>
+
+    <div class="container mt-5">
+        <h1 class="text-center fw-bold">Zadania z Pythona</h1>
+        <p class="text-center">Ćwicz swoje umiejętności programowania w Pythonie, rozwiązując interaktywne zadania.</p>
+
+        <!-- Dodawanie zadań (widoczne dla nauczycieli i adminów) -->
+        <% if (user && (user.role === "teacher" || user.role === "admin")) { %>
+            <div class="d-flex justify-content-end mb-3">
+                <a href="/exercises/add" class="btn btn-success">+ Dodaj Zadanie</a>
+            </div>
+        <% } %>
+
+        <% if (exercises.length > 0) { %>
+            <ul class="list-group mt-4">
+                <% exercises.forEach(exercise => { %>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <a href="/exercises/<%= exercise.id %>" class="text-decoration-none">
+                            <h5 class="mb-1"><%= exercise.question %></h5>
+                            <small class="text-muted">Lekcja: <%= exercise.lesson_id %></small>
+                        </a>
+
+                        <!-- Widoczne dla nauczycieli i adminów -->
+                        <% if (user && (user.role === "teacher" || user.role === "admin")) { %>
+                            <div>
+                                <a href="/exercises/edit/<%= exercise.id %>" class="btn btn-sm btn-warning">Edytuj</a>
+                                <a href="/exercises/delete/<%= exercise.id %>" class="btn btn-sm btn-danger">Usuń</a>
+                            </div>
+                        <% } %>
+
+                    </li>
+                <% }); %>
+            </ul>
+        <% } else { %>
+            <p class="text-center text-muted">Nie dodano jeszcze żadnych zadań.</p>
+        <% } %>
+    </div>
+
+    <%- include("../partials/footer") %>
+</body>
+</html>

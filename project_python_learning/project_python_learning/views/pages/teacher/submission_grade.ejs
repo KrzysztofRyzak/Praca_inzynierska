@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <%- include("../partials/head", { title: "Oceń ćwiczenie" }) %>
+</head>
+<body>
+<%- include("../partials/navbar", { user }) %>
+
+<div class="container mt-5">
+    <h1 class="text-center">Oceń ćwiczenie</h1>
+
+    <div class="card mt-4">
+        <div class="card-body">
+            <h5 class="card-title"><%= submission.Exercise.question %></h5>
+
+            <% if (submission.Exercise.code_example) { %>
+                <pre class="bg-light p-3"><code><%= submission.Exercise.code_example %></code></pre>
+            <% } %>
+            <p> Typ ćwiczenia: <%= submission.Exercise.answer_type %> <p>
+            <p> Rozwiązanie:</p>
+            <p><%= submission.submitted_answer %> </p>
+
+            <form action="/teacher/submissions/<%= submission.id %>/grade" method="post">
+                <label for="points">Oceń ćwiczenie od 0 do 10 punktów:</label>
+                <input type="number" id="points" name="points" min="0" max="10" value="<%= submission.points ? submission.points : "" %>"/>
+                <button type="submit" class="btn btn-success mt-3">Zapisz ocenę</button>
+            </form>
+        </div>
+    </div>
+
+    <a href="/teacher/my_submissions" class="btn btn-secondary mt-3">Powrót do listy ćwiczeń do oceny</a>
+</div>
+
+<%- include("../partials/footer") %>
+</body>
+</html>

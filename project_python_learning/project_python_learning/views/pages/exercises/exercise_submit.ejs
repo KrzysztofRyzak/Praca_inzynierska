@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <%- include("../partials/head", { title: "Rozwiąż zadanie" }) %>
+</head>
+<body>
+    <%- include("../partials/navbar", { user }) %>
+
+    <div class="container mt-5">
+        <h1 class="text-center">Rozwiąż zadanie</h1>
+
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title"><%= exercise.question %></h5>
+
+                <% if (exercise.code_example) { %>
+                    <pre class="bg-light p-3"><code><%= exercise.code_example %></code></pre>
+                <% } %>
+
+                <form action="/exercises/<%= exercise.id %>/submit" method="post">
+                    <% if (exercise.answer_type === "Wielokrotny wybór") { %>
+                        <p><strong>Wybierz poprawną odpowiedź:</strong></p>
+                        <% JSON.parse(JSON.parse(exercise.options)).forEach(option => { %>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="submitted_answer" value="<%= option %>" required>
+                                <label class="form-check-label"><%= option %></label>
+                            </div>
+                        <% }); %>
+                    <% } else { %>
+                        <label for="submitted_answer" class="form-label">Wpisz swoją odpowiedź:</label>
+                        <textarea id="submitted_answer" name="submitted_answer" class="form-control" rows="5" required></textarea>
+                    <% } %>
+
+                    <button type="submit" class="btn btn-success mt-3">Sprawdź odpowiedź</button>
+                </form>
+
+                <% if (typeof result !== "undefined") { %>
+                    <div class="mt-4 alert <%= result.correct ? 'alert-success' : 'alert-danger' %>">
+                        <strong><%= result.correct ? "Poprawna odpowiedź! (+10 pkt)" : "Błędna odpowiedź (0 pkt)" %></strong>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+        <a href="/exercises" class="btn btn-secondary mt-3">Powrót do listy zadań</a>
+    </div>
+
+    <%- include("../partials/footer") %>
+</body>
+</html>

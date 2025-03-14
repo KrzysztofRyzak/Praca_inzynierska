@@ -1,0 +1,39 @@
+<%- include("../partials/head", { title: "Python Learning - Logowanie" }) %>
+<body class="d-flex flex-column min-vh-100">
+    
+    <%- include("../partials/navbar", { user }) %>
+
+    <div class="container mt-5">
+        <h2 class="text-center fw-bold text-primary">Logowanie do Python Learning</h2>
+        <p class="text-center text-muted">Wprowadź swoje dane, aby uzyskać dostęp do platformy.</p>
+
+        <div class="card mx-auto mt-4 shadow-sm" style="max-width: 400px; border-radius: 10px;">
+            <div class="card-body">
+                <form action="/login" method="post">
+                    <!-- Email -->
+                    <div class="mb-3">
+                        <label for="emailControl" class="form-label fw-bold">Adres e-mail:</label>
+                        <input type="email" id="emailControl" class="form-control" name="email" required>
+                    </div>
+
+                    <!-- Hasło -->
+                    <div class="mb-3">
+                        <label for="passwordControl" class="form-label fw-bold">Hasło:</label>
+                        <input type="password" id="passwordControl" class="form-control" name="password" required>
+                    </div>
+
+                    <!-- Przycisk logowania -->
+                    <button type="submit" class="btn btn-primary w-100 fw-bold">Zaloguj się</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Link do rejestracji -->
+        <p class="text-center mt-3">
+            Nie masz jeszcze konta? <a href="/register" class="fw-bold text-primary">Zarejestruj się tutaj</a>
+        </p>
+    </div>
+
+    <%- include("../partials/footer") %>
+</body>
+</html>

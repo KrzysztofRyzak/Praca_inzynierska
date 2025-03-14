@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <%- include("../partials/head", { title: "Edytuj zadanie" }) %>
+</head>
+<script>
+    function answerTypeControlOnChange() {
+        let answerHtml = null;
+        let answerTypeControlValue = document.getElementById("answerTypeControl").value;
+        console.log(answerTypeControlValue);
+        if (answerTypeControlValue === "Pole tekstowe") {
+            // Normalna odpowiedź tekstowa
+            answerHtml = `                <div class="mb-3">
+                    <label for="correctAnswerControl" class="form-label fw-bold">Poprawna odpowiedź:</label>
+                    <input type="text" id="correctAnswerControl" class="form-control" name="correct_answer" required>
+                        <div class="invalid-feedback">Podaj poprawną odpowiedź.</div>
+                </div>`
+        } else {
+            //quizowe odpowiedzi
+            answerHtml =
+                `                        <div>
+                        <div class="mb-3">
+                            <label for="option1" class="form-label fw-bold">Opcja 1:</label>
+                            <input type="text" id="option1" class="form-control" name="option1" required>
+                            <div class="invalid-feedback">Podaj poprawną opcje 1.</div>
+                            <label for="option2" class="form-label fw-bold">Opcja 2:</label>
+                            <input type="text" id="option2" class="form-control" name="option2" required>
+                            <div class="invalid-feedback">Podaj poprawną opcje 2.</div>
+                            <label for="option3" class="form-label fw-bold">Opcja 3:</label>
+                            <input type="text" id="option3" class="form-control" name="option3" required>
+                            <div class="invalid-feedback">Podaj poprawną opcje 3.</div>
+                            <label for="option4" class="form-label fw-bold">Opcja 4:</label>
+                            <input type="text" id="option4" class="form-control" name="option4" required>
+                            <div class="invalid-feedback">Podaj poprawną opcje 4.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="correctOptionAnswer" class="form-label fw-bold">Poprawna odpowiedź:</label>
+                            <select id="correctOptionAnswer" class="form-select" name="correctOption" required>
+                                <option value="option1">Opcja 1</option>
+                                <option value="option2">Opcja 2</option>
+                                <option value="option3">Opcja 3</option>
+                                <option value="option4">Opcja 4</option>
+                            </select>
+                        </div>
+                </div>`
+        }
+        document.getElementById("correctAnswer").innerHTML = answerHtml;
+    }
+</script>
+<body>
+    <%- include("../partials/navbar", { user }) %>
+
+    <div class="container mt-5">
+        <h2 class="text-center fw-bold">Edytuj zadanie</h2>
+        <p class="text-muted text-center">Zmodyfikuj informacje dotyczące zadania i zapisz zmiany.</p>
+
+        <div class="card mx-auto mt-4 shadow-sm border-primary" style="max-width: 700px;">
+            <div class="card-body">
+                <form action="/exercises/edit/<%= exercise.id %>" method="post" class="needs-validation" novalidate>
+
+                    <!-- Wybór lekcji -->
+                    <div class="mb-3">
+                        <label for="lessonControl" class="form-label fw-bold">Wybierz lekcję:</label>
+                        <select id="lessonControl" class="form-select" name="lesson_id" required>
+                            <% lessons.forEach(lesson => { %>
+                                <option value="<%= lesson.id %>" <%= lesson.id === exercise.lesson_id ? "selected" : "" %>><%= lesson.title %></option>
+                            <% }); %>
+                        </select>
+                        <div class="invalid-feedback">Wybierz lekcję dla tego zadania.</div>
+                    </div>
+
+                    <!-- Pytanie zadania -->
+                    <div class="mb-3">
+                        <label for="questionControl" class="form-label fw-bold">Treść pytania:</label>
+                        <textarea id="questionControl" class="form-control" name="question" rows="3" required><%= exercise.question %></textarea>
+                        <div class="invalid-feedback">Podaj treść pytania.</div>
+                    </div>
+
+                    <!-- Przykładowy kod -->
+                    <div class="mb-3">
+                        <label for="codeExampleControl" class="form-label fw-bold">Przykładowy kod (opcjonalnie):</label>
+                        <textarea id="codeExampleControl" class="form-control" name="code_example" rows="3"><%= exercise.code_example %></textarea>
+                    </div>
+
+                    <!-- Typ odpowiedzi -->
+                    <div class="mb-3">
+                        <label for="answerTypeControl" class="form-label fw-bold">Typ odpowiedzi:</label>
+                        <select id="answerTypeControl" class="form-select" name="answer_type" onchange="answerTypeControlOnChange()" required>
+                            <% exercise_answer_types.forEach(type => { %>
+                                <option value="<%= type %>" <%= exercise.answer_type === type ? "selected" : "" %>><%= type %></option>
+                            <% }); %>
+                        </select>
+                        <div class="invalid-feedback">Wybierz typ odpowiedzi.</div>
+                    </div>
+
+                    <!-- Odpowiedzi -->
+                    <% if(exercise.answer_type === "Wielokrotny wybór") { %>
+                    <!--  Odpowiedzi quizowe                        -->
+                        <div id="correctAnswer">
+                            <div class="mb-3">
+                                <label for="option1" class="form-label fw-bold">Opcja 1:</label>
+                                <input type="text" id="option1" class="form-control" name="option1" value="<%= exercise.option1 %>" required>
+                                <div class="invalid-feedback">Podaj poprawną opcje 1.</div>
+                                <label for="option2" class="form-label fw-bold">Opcja 2:</label>
+                                <input type="text" id="option2" class="form-control" name="option2" value="<%= exercise.option2 %>" required>
+                                <div class="invalid-feedback">Podaj poprawną opcje 2.</div>
+                                <label for="option3" class="form-label fw-bold">Opcja 3:</label>
+                                <input type="text" id="option3" class="form-control" name="option3" value="<%= exercise.option3 %>" required>
+                                <div class="invalid-feedback">Podaj poprawną opcje 3.</div>
+                                <label for="option4" class="form-label fw-bold">Opcja 4:</label>
+                                <input type="text" id="option4" class="form-control" name="option4" value="<%= exercise.option4 %>" required>
+                                <div class="invalid-feedback">Podaj poprawną opcje 4.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="correctOptionAnswer" class="form-label fw-bold">Poprawna odpowiedź:</label>
+                                <select id="correctOptionAnswer" class="form-select" name="correctOption" required>
+                                    <option value="option1" <%= exercise.correctOption === "option1" ? "selected" : "" %> >Opcja 1</option>
+                                    <option value="option2" <%= exercise.correctOption === "option2" ? "selected" : "" %> >Opcja 2</option>
+                                    <option value="option3" <%= exercise.correctOption === "option3" ? "selected" : "" %> >Opcja 3</option>
+                                    <option value="option4" <%= exercise.correctOption === "option4" ? "selected" : "" %> >Opcja 4</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    <% } else { %>
+                    <!--  Normalna odpowiedź tekstowa                  -->
+                    <div id="correctAnswer">
+                        <div class="mb-3">
+                            <label for="correctAnswerControl" class="form-label fw-bold">Poprawna odpowiedź:</label>
+                            <input type="text" id="correctAnswerControl" class="form-control" name="correct_answer" value="<%= exercise.correct_answer %>" required>
+                            <div class="invalid-feedback">Podaj poprawną odpowiedź.</div>
+                        </div>
+                    </div>
+                    <% } %>
+
+                    <!-- Przycisk zapisu -->
+                    <button type="submit" class="btn btn-primary w-100 fw-bold">Zapisz zmiany</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Powrót -->
+        <div class="text-center mt-3">
+            <a href="/exercises" class="btn btn-secondary fw-bold">Wróć do listy zadań</a>
+        </div>
+    </div>
+
+    <%- include("../partials/footer") %>
+
+    <!-- Walidacja formularza -->
+    <script>
+        (function () {
+            'use strict';
+            var forms = document.querySelectorAll('.needs-validation');
+            Array.prototype.slice.call(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+    </script>
+
+</body>
+</html>

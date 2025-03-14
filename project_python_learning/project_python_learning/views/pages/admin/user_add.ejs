@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <%- include("../partials/head", { title: "Dodaj użytkownika" }) %>
+</head>
+<body>
+    <%- include("../partials/navbar", { user }) %>
+
+    <div class="container mt-5">
+        <h2 class="text-center fw-bold">Dodaj nowego użytkownika</h2>
+        <p class="text-muted text-center">Wypełnij poniższy formularz, aby dodać nowego użytkownika do systemu.</p>
+
+        <div class="card mx-auto mt-4 shadow-sm" style="max-width: 700px;">
+            <div class="card-body">
+                <form action="/admin/users/add" method="post" class="needs-validation" novalidate>
+
+                    <!-- Imię -->
+                    <div class="mb-3">
+                        <label for="nameControl" class="form-label fw-bold">Imię:</label>
+                        <input type="text" id="nameControl" class="form-control" name="name" required>
+                        <div class="invalid-feedback">Podaj imię.</div>
+                    </div>
+
+                    <!-- Nazwisko -->
+                    <div class="mb-3">
+                        <label for="surnameControl" class="form-label fw-bold">Nazwisko:</label>
+                        <input type="text" id="surnameControl" class="form-control" name="surname" required>
+                        <div class="invalid-feedback">Podaj nazwisko.</div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="mb-3">
+                        <label for="emailControl" class="form-label fw-bold">Email:</label>
+                        <input type="email" id="emailControl" class="form-control" name="email" required>
+                        <div class="invalid-feedback">Podaj poprawny adres email.</div>
+                    </div>
+
+                    <!-- Hasło -->
+                    <div class="mb-3">
+                        <label for="passwordControl" class="form-label fw-bold">Hasło:</label>
+                        <input type="password" id="passwordControl" class="form-control" name="password" required>
+                        <div class="invalid-feedback">Podaj hasło.</div>
+                    </div>
+
+                    <!-- Rola -->
+                    <div class="mb-3">
+                        <label for="roleControl" class="form-label fw-bold">Rola:</label>
+                        <select id="roleControl" class="form-select" name="role" required>
+                            <option value="student">Student</option>
+                            <option value="teacher">Nauczyciel</option>
+                            <option value="admin">Administrator</option>
+                        </select>
+                        <div class="invalid-feedback">Wybierz rolę użytkownika.</div>
+                    </div>
+
+                    <!-- Przycisk dodawania -->
+                    <button type="submit" class="btn btn-success w-100 fw-bold">Dodaj użytkownika</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Powrót -->
+        <div class="text-center mt-3">
+            <a href="/admin/users" class="btn btn-secondary fw-bold">Wróć do użytkowników</a>
+        </div>
+    </div>
+
+    <%- include("../partials/footer") %>
+
+    <!-- Walidacja formularza -->
+    <script>
+        (function () {
+            'use strict';
+            var forms = document.querySelectorAll('.needs-validation');
+            Array.prototype.slice.call(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+    </script>
+
+</body>
+</html>

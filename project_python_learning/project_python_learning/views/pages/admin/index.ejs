@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <%- include("../partials/head", { title: "Panel Administratora" }) %>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+    <%- include("../partials/navbar", { user }) %>
+
+    <div class="container mt-5">
+        <h1 class="text-center fw-bold text-primary">Panel Administratora</h1>
+        <p class="text-center text-muted">Zarządzaj użytkownikami, lekcjami oraz zadaniami na platformie.</p>
+
+        <div class="row mt-4">
+            <!-- Zarządzanie użytkownikami -->
+            <div class="col-md-4">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-primary text-white text-center">
+                        <h5 class="m-0 fw-bold">Zarządzanie użytkownikami</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <p class="card-text text-muted">Dodawaj, edytuj i usuwaj użytkowników systemu.</p>
+                        <a href="/admin/users" class="btn btn-primary w-100 fw-bold">Przejdź</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Zarządzanie lekcjami -->
+            <div class="col-md-4">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-primary text-white text-center">
+                        <h5 class="m-0 fw-bold">Zarządzanie lekcjami</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <p class="card-text text-muted">Przeglądaj, edytuj i dodawaj nowe lekcje.</p>
+                        <a href="/admin/lessons" class="btn btn-success w-100 fw-bold">Przejdź</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Zarządzanie zadaniami -->
+            <div class="col-md-4">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-primary text-white text-center">
+                        <h5 class="m-0 fw-bold">Zarządzanie zadaniami</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <p class="card-text text-muted">Dodawaj i modyfikuj zadania dla studentów.</p>
+                        <a href="/admin/exercises" class="btn btn-warning w-100 fw-bold">Przejdź</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include("../partials/footer") %>
+
+</body>
+</html>

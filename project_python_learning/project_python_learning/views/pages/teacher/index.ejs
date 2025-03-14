@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <%- include("../partials/head", { title: "Panel Nauczyciela" }) %>
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <%- include("../partials/navbar", { user }) %>
+
+    <div class="container mt-5">
+        <h1 class="text-center fw-bold">Panel Nauczyciela</h1>
+        <p class="text-center lead">Zarządzaj swoimi lekcjami i zadaniami w kursie Python.</p>
+
+        <div class="row row-cols-1 row-cols-md-3 g-4 mt-4 justify-content-center">
+            <!-- Zarządzanie lekcjami -->
+            <div class="col">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-primary text-white text-center">
+                        <h5 class="card-title m-0">Twoje Lekcje</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <p class="card-text">Przeglądaj i edytuj swoje lekcje.</p>
+                        <a href="/lessons" class="btn btn-primary w-100">Zarządzaj Lekcjami</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Zarządzanie zadaniami -->
+            <div class="col">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-secondary text-white text-center">
+                        <h5 class="card-title m-0">Twoje Zadania</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <p class="card-text">Przeglądaj i edytuj zadania dla uczniów.</p>
+                        <a href="/exercises" class="btn btn-secondary w-100">Zarządzaj Zadaniami</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ocenianie ćwiczeń uczniów -->
+            <div class="col">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-success text-white text-center">
+                        <h5 class="card-title m-0">Ocenianie Ćwiczeń</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <p class="card-text">Przeglądaj i oceniaj rozwiązania uczniów.</p>
+                        <a href="/teacher/my_submissions" class="btn btn-success w-100">Oceniaj Ćwiczenia</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include("../partials/footer") %>
+</body>
+</html>

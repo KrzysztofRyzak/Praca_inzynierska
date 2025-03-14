@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <%- include("../partials/head", { title: "Moje ćwiczenia - Python Learning" }) %>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- NAVBAR -->
+    <%- include("../partials/navbar") %>
+
+    <!-- Główna sekcja -->
+    <main class="container my-5">
+        <h2 class="text-center fw-bold">Ćwiczenia do oceny</h2>
+        <p class="text-center text-muted">Tutaj znajdziesz wszystkie rozwiązania ćwiczeń uczniów.</p>
+
+        <% if (submissions.length > 0) { %>
+            <table class="table table-hover mt-4">
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Ćwiczenie</th>
+                        <th>Rozwiązanie</th>
+                        <th>Punkty</th> <!-- Nowa kolumna na punkty -->
+                        <th>Akcja</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% submissions.forEach((submission) => { %>
+                        <tr>
+                            <td><%= submission.id %></td>
+                            <td><%= submission.Exercise.question %></td>
+                            <td><%= submission.submitted_answer %></td>
+                            <% if (submission.points !== null) { %>
+                                <!-- Wyświetlanie punktów -->
+                                <td>
+                                    <div>
+                                    <h1><span class="badge bg-info "><%= submission.points %>/10 pkt</span></h1>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a href="/teacher/submissions/<%- submission.id %>/grade"
+                                       class="btn btn-primary btn-sm">
+                                        Zmień ocenę
+                                    </a>
+                                </td>
+                                <% } else { %>
+                                <td>
+                                    <span class="badge bg-secondary">Nie oceniono</span>
+                                </td>
+                                <td>
+                                    <a href="/teacher/submissions/<%- submission.id %>/grade"
+                                       class="btn btn-primary btn-sm">
+                                        Oceń
+                                    </a>
+                                </td>
+                            <% } %>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+
+        <% } else { %>
+            <p class="text-center text-muted">Nie masz jeszcze żadnych ćwiczeń do oceny.</p>
+        <% } %>
+    </main>
+
+    <!-- FOOTER -->
+    <%- include("../partials/footer") %>
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <%- include("../partials/head", { title: "Zarządzanie zadaniami" }) %>
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <%- include("../partials/navbar", { user }) %>
+
+    <div class="container mt-5">
+        <h2 class="text-center fw-bold">Zarządzanie zadaniami</h2>
+        <p class="text-center text-muted">Lista wszystkich zadań na platformie. Możesz je edytować lub usuwać.</p>
+
+        <div class="d-flex justify-content-end">
+            <a href="/exercises/add" class="btn btn-success fw-bold mb-3">+ Dodaj nowe zadanie</a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover table-striped table-bordered shadow-sm">
+                <thead class="table-dark text-center">
+                    <tr>
+                        <th>ID</th>
+                        <th>Pytanie</th>
+                        <th>Typ</th>
+                        <th>Twórca</th>
+                        <th class="text-center">Akcje</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (exercises.length > 0) { %>
+                        <% exercises.forEach(exercise => { %>
+                            <tr>
+                                <td class="align-middle text-center"><%= exercise.id %></td>
+                                <td class="align-middle"><%= exercise.question %></td>
+                                <td class="align-middle text-center">
+                                    <span class="badge <%= exercise.answer_type === 'Wielokrotny wybór' ? 'bg-primary' : 'bg-secondary' %>">
+                                        <%= exercise.answer_type %>
+                                    </span>
+                                </td>
+                                <td class="align-middle text-center"><%= exercise.created_by %></td>
+                                <td class="align-middle text-center">
+                                    <a href="/exercises/edit/<%= exercise.id %>" class="btn btn-sm btn-warning text-white">Edytuj</a>
+                                    <form action="/exercises/delete/<%= exercise.id %>" method="post" class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-danger border-0">Usuń</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    <% } else { %>
+                        <tr>
+                            <td colspan="5" class="text-center text-muted fw-bold py-4">Brak zadań do wyświetlenia.</td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <%- include("../partials/footer") %>
+</body>
+</html>

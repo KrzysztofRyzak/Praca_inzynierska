@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <%- include("../partials/head", { title: "Lekcje Python" }) %>
+</head>
+<body>
+    <%- include("../partials/navbar", { user }) %>
+
+    <div class="container mt-5">
+        <h1 class="text-center fw-bold"> Lekcje Python</h1>
+        <p class="text-center text-muted">Wybierz tematykę i zacznij naukę.</p>
+
+        <!-- Dodawanie lekcji (widoczne dla nauczycieli i adminów) -->
+        <% if (user && (user.role === "teacher" || user.role === "admin")) { %>
+            <div class="d-flex justify-content-end mb-3">
+                <a href="/lessons/add" class="btn btn-success">+ Dodaj Lekcję</a>
+            </div>
+        <% } %>
+
+        <% const categories = {}; %>
+        <% lessons.forEach(lesson => { %>
+            <% if (!categories[lesson.category]) { categories[lesson.category] = []; } %>
+            <% categories[lesson.category].push(lesson); %>
+        <% }); %>
+
+        <% Object.keys(categories).forEach(category => { %>
+            <h3 class="mt-4 fw-bold"><%= category %></h3>
+            <ul class="list-group">
+                <% categories[category].forEach(lesson => { %>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <a href="/lessons/<%= lesson.id %>" class="text-decoration-none"><%= lesson.title %></a>
+
+                        <!-- Widoczne dla nauczycieli i adminów -->
+                        <% if (user && (user.role === "teacher" || user.role === "admin")) { %>
+                            <div>
+                                <a href="/lessons/edit/<%= lesson.id %>" class="btn btn-sm btn-warning">Edytuj</a>
+                                <a href="/lessons/delete/<%= lesson.id %>" class="btn btn-sm btn-danger">Usuń</a>
+                            </div>
+                        <% } %>
+                    </li>
+                <% }); %>
+            </ul>
+        <% }); %>
+    </div>
+
+    <%- include("../partials/footer") %>
+</body>
+</html>

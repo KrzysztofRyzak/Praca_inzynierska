@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <%- include("../partials/head", { title: "Moje ćwiczenia - Python Learning" }) %>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- NAVBAR -->
+    <%- include("../partials/navbar") %>
+
+    <!-- Główna sekcja -->
+    <main class="container my-5">
+        <h1 class="text-center fw-bold">Moje ćwiczenia</h1>
+        <p class="text-center text-muted">Tutaj znajdziesz wszystkie swoje zadania, które rozpocząłeś lub ukończyłeś.</p>
+
+        <% if (submissions.length > 0) { %>
+        <div class="table-responsive"> <!-- Dodana klasa, która pozwala na przewijanie -->
+            <table class="table table-hover mt-4">
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Ćwiczenie</th>
+                        <th>Rozwiązanie</th>
+                        <th>Punkty</th>
+                        <th>Akcja</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% submissions.forEach((submission) => { %>
+                        <tr>
+                            <td><%= submission.id %></td>
+                            <td><%= submission.Exercise.question %></td>
+                            <td><%= submission.submitted_answer %></td>
+                            <!-- Wyświetlanie punktów -->
+                            <td>
+                                <% if (submission.points !== null) { %>
+                                    <span class="badge bg-info"><%= submission.points %>/10 pkt</span>
+                                <% } else { %>
+                                    <span class="badge bg-secondary">Nie oceniono</span>
+                                <% } %>
+                            </td>
+                            <td>
+                                <a href="/exercises/<%- submission.Exercise.id %>/submit"
+                                   class="btn btn-primary btn-sm">
+                                    Rozwiąż ponownie
+                                </a>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div> <!-- Zamknięcie `table-responsive` -->
+
+        <% } else { %>
+            <p class="text-center text-muted">Nie masz jeszcze żadnych ćwiczeń.</p>
+        <% } %>
+    </main>
+
+    <!-- FOOTER -->
+    <%- include("../partials/footer") %>
+
+</body>
+</html>
